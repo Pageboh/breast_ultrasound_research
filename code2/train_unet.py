@@ -18,8 +18,8 @@ class BUSIDataset(Dataset):
         self.mask_paths = []
         
         self.transform = transforms.Compose([
-            transforms.Resize((img_size, img_size)),
-            transforms.ToTensor()
+            transforms.Resize((img_size, img_size)), # 1. 对应：Resize (256x256)
+            transforms.ToTensor()                    # 2. 对应：转为 Tensor，并自动归一化
         ])
         
         # 智能寻路：自动在文件夹及其子文件夹中寻找包含 benign 和 malignant 的那一层
@@ -133,6 +133,7 @@ class UNet(nn.Module):
         x = self.up4(x)
         x = torch.cat([x1, x], dim=1)
         x = self.conv4(x)
+        # 对应：经过 Sigmoid 激活的概率图
         return torch.sigmoid(self.outc(x))
 
 
@@ -245,6 +246,8 @@ def main():
     csv_path = os.path.join(result_dir, "segmentation_metrics.csv")
     df = pd.DataFrame(results)
     df.to_csv(csv_path, index=False)
+    # 在 main 函数结束前，增加保存权重的代码
+    torch.save(model.state_dict(), '/root/autodl-tmp/breast_ultrasound_research/code2/result/best_unet.pth')
     
     print(f"\n🎉 运行成功结束！请在以下路径查看结果：")
     print(f"1. 评估指标表格: {csv_path} (平均Dice: {df['Dice'].mean():.4f})")
