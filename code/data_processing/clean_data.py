@@ -3,8 +3,8 @@ import numpy as np
 
 def clean_radiomics_data():
     # 1. 读取原始特征表
-    input_file = 'radiomics_features.csv'
-    output_file = 'feature_table_cleaned.csv'
+    input_file = 'code/output/radiomics_features.csv'
+    output_file = 'code/output/feature_table_cleaned.csv'
     
     print(f"正在读取特征表: {input_file}...")
     df = pd.read_csv(input_file)

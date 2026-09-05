@@ -1,7 +1,12 @@
+# 数据集文件夹
+dataset/
+autodl-tmp/
+
+# 训练生成的权重和结果表格
 checkpoints/
-data/
-results/
-__pycache__/
 *.pth
-*.png
 *.csv
+
+# Python 缓存
+__pycache__/
+*.pyc

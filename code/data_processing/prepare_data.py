@@ -5,14 +5,13 @@ import cv2
 import matplotlib.pyplot as plt
 
 # 1. 核心研究与分析底表构建
-data_dir = '../data/BUSI'
-categories = ['benign', 'malignant'] # 剔除 normal 类别，聚焦病灶分析
+# [修改点] 使用服务器上的绝对路径，避免因为终端当前所在目录不同导致路径解析错误
+data_dir = '/root/autodl-tmp/breast_ultrasound_research/data/BUSI' 
+categories = ['benign', 'malignant'] 
 records = []
 
 for cat in categories:
-    # 找到该目录下所有的 png 图片
     all_files = glob.glob(os.path.join(data_dir, cat, '*.png'))
-    # 过滤掉已经是掩膜(mask)的图片，只保留原始超声图像
     img_paths = [f for f in all_files if 'mask' not in f]
     
     for img_path in img_paths:
@@ -46,3 +45,6 @@ if not df.empty:
     plt.tight_layout()
     plt.savefig('overlay_check.png', bbox_inches='tight', pad_inches=0)
     print("掩膜可视化图像 (overlay_check.png) 已生成。")
+else:
+    # [修改点] 增加查错提示，如果路径还是不对，可以在终端立刻看到
+    print(f"警告：未找到任何有效数据！请检查路径是否真的存在: {data_dir}")

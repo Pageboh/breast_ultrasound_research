@@ -11,7 +11,7 @@ def build_radiomics_matrix():
     print("开始构建影像组学特征阵列，进入研究与分析流程...")
     
     # === 修正后的读取逻辑：确保路径唯一且安全 ===
-    manifest_path = 'output/dataset_manifest.csv'
+    manifest_path = 'code/output/dataset_manifest.csv'
     if not os.path.exists(manifest_path):
         print(f"错误：未找到基础底表 {manifest_path}")
         return
@@ -80,7 +80,7 @@ def build_radiomics_matrix():
             
     # 保存结果
     results_df = pd.DataFrame(results)
-    output_csv = 'output/radiomics_features.csv'
+    output_csv = 'code/output/radiomics_features.csv'
     results_df.to_csv(output_csv, index=False)
     
     num_features = results_df.shape[1] - 2 if not results_df.empty else 0
